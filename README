@@ -1,21 +1,27 @@
-Bruce Fernandes
-101067817
-COMP2406 Assignment 3
 
 Question API:
-
+	This API uses node.js, javascript and express. It was part of my projects in a course which has helped me appreciate the thought and effort
+	that goes into building APIs. However, this version uses a file based approach when storing questions which is not ideal. Later I will modify
+	this API to use MongoDB to make it easier to use.
 
 How it works:
-	-  As per the specification, users will be able to make GET requests to this API based on the number of questions, the category and the difficulty level in order to
+	-  Users will be able to make GET requests to this API based on the number of questions, the category and the difficulty level in order to
 	   get their desired amount of questions. Users will also be able to create, view and delete sessions based on token numbers. Each token number represents an active
  	   session that does not allow the user to see a question more than once, whether this be based on category or difficulty or both. The way in which I have coded this
 	   is using the unique question id of the questions provided to ensure no repetitions. I have also used a shuffle function in order to randomize the questions array
 	   from the questions directory.
 
 	- The query parameters used are limit (number of questions desired), category, difficulty and token (for the sessions IDs)
-	- I used POSTMAN in order to test my API
+	
 
 Instructions (using POSTMAN) -
+	To Install:- 
+	- Download all the files into one folder
+	- Unzip the questions folder and have the folder reside in the same directory as the server file
+	- Open CMD and traverse into the server directory
+	- Type in "npm install express" and "npm install uuid"
+	- Type in "node server.js" to run the server
+		
 	Base URL - http://localhost:3000/
 	1. To get random questions - provide /questions and select GET
 	2. To create a session - provide /sessions and select POST
@@ -23,19 +29,10 @@ Instructions (using POSTMAN) -
 	4. To delete a specific session - provide /sessions + session ID you want to delete and select DELETE
 	5. To get questions for a specific token and other parameters - type in /questions with the uuid as a query parameter along with limit, category and difficulty if desired.
 
-Assumptions made:
-	1 - The user knows the corresponding category and difficulty ID of their desired parameter. For example, the user knows that they must enter integer 16 if they
-		want questions that are related to Anime.
-
-	2 - The user understands that session IDs are uuid and if they want to enter their desired session they must provide the uuid in the token query variable.
-
-	3 - The user knows that if they receive an object with status code 1 or 2 and an empty results array, they have made a mistake regarding the individual or combination
-		of parameters included.
 
 
-
-Error cases dealt with:
-	0. If the user requests 0 questions, the server will provide the default number of questions (10)
+Error cases:
+	0. If the user requests 0 questions, the server will provide a default number of questions which is 10
 
 	1. If the user has not provided an invalid token number, we return with a status of 2 and an empty results array
 
@@ -58,7 +55,4 @@ Error cases dealt with:
 	10. If the difference between the total number of desired difficulties and the number of desired difficulties already stored in a session is less than or equal to 0, we return a status of 1 and an empty results array
 
 
-What I could have done better:
 
-	My handler for GET /questions has way too much code in it. This is because I have repeated the process of checking the validity of the query parameters 3 times for 3 different
-	circumstances. This could have been put in a function which would have decreased the amount of code within my handler.
